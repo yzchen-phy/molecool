@@ -55,23 +55,56 @@ def zen(with_attribution=True):
     return quote
 
 def calculate_distance(rA, rB):
-    # This function calculates the distance between two points given as numpy arrays.
-    d=(rA-rB)
-    dist=np.linalg.norm(d)
-    return dist
+    """Calculate the distance between two points.
 
-def open_pdb(f_loc):
-    # This function reads in a pdb file and returns the atom names and coordinates.
+    Parameters
+    ----------
+    rA, rB : np.ndarray
+        The coordinates of each point.
 
-    with open(f_loc) as f:
+    Returns
+    ----------
+    distance : float
+        The distance bwteen the two points.
+
+    Examples
+    ----------
+    >>> r1 = np.array([0, 0, 0])
+    >>> r2 = np.array([0, 0.1, 0])
+    >>> calculate_distance(r1, r2)
+    0.1
+    """
+    dist_vec = (rA-rB)
+    distance = np.linalg.norm(dist_vec)
+
+    return distance
+
+def open_pdb(file_location):
+    """This function reads in a pdb file and returns the atom names and coordinates.
+
+    The pdb file must specify the atom elements in the last column, and follow the conventions outlined in the PDB format specification.
+
+    Parameters
+    ----------
+    file_location : str
+        The location and name of pdb file to read in
+
+    Returns
+    ----------
+    coords : np.ndarrays
+        The coordinates of the atoms
+    symbols : np.ndarrays
+        The atomic symbols of the atoms
+    """
+    with open(file_location) as f:
         data = f.readlines()
 
     coordinates = []
     symbols = []
     for line in data:
         if 'ATOM' in line[0:6] or 'HETATM' in line[0:6]:
-            symbols.append(l[76:79].strip())
-            atom_coords = [float(x) for x in l[30:55].split()]
+            symbols.append(line[76:79].strip())
+            atom_coords = [float(x) for x in line[30:55].split()]
             coordinates.append(atom_coords)
 
     coords = np.array(coordinates)
