@@ -24,3 +24,5 @@ in the repository directory.
 This package requires the following:
   - numpy
   - matplotlib
+
+Test merging diverging branches to main
