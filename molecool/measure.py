@@ -2,6 +2,8 @@
 This module is for functions that perform measurements.
 """
 
+import numpy as np
+
 def calculate_distance(rA, rB):
     """Calculate the distance between two points.
 
